@@ -21,10 +21,6 @@ function App() {
   
   const likeText = changeLike ? "We would recommend more songs like this" : "We would not recommend songs like this";
 
-  const shuffle =()=>{
-    setCurrentSongIndex(Math.floor(Math.random() * songs.length))
-  }
-
 
   useEffect(() =>{
     setNextSongIndex(()=>{
@@ -277,7 +273,6 @@ function App() {
     <div className="App">
       <Player currentSongIndex={currentSongIndex} setCurrentSongIndex={setCurrentSongIndex} nextSongIndex={nextSongIndex} songs={songs}
       like={like} likeSong={likeSong} likeBool={likeBool} likeText={likeText}
-      shuffle={shuffle}
       />
     </div>
   ); 

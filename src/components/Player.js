@@ -5,6 +5,16 @@ import PlayerControls from './PlayerControls';
 function Player(props) {
     const audioElement = useRef(null);
     const [isPlaying, setIsPlaying] = useState(false);
+    const [repeat, setRepeat] = useState(false)
+    const [shuffle, setShuffle] = useState(false)
+
+    const shuffleFunc = ()=> {
+        setShuffle(!shuffle)
+    }
+
+    const repeatFunc = () => {
+        setRepeat(!repeat)
+    }
 
     useEffect(()=>{
         setTimeout(()=>{
@@ -12,6 +22,7 @@ function Player(props) {
         }, 5000)
         
     },)
+
 
     useEffect(() => {
         if (isPlaying) {
@@ -21,8 +32,8 @@ function Player(props) {
         }
     });
 
-    const SkipSong = (forwards = true) => {
-        if (forwards) {
+    const SkipSong = (forwards) => {
+        if (forwards === true) {
             props.setCurrentSongIndex(() => {
                 let temp = props.currentSongIndex;
                 temp++;
@@ -44,6 +55,37 @@ function Player(props) {
 
                 return temp;
             });
+        }
+
+        if (repeat === true) {
+
+            if (forwards === true) {
+                props.setCurrentSongIndex(() => {
+                    let temp = props.currentSongIndex;
+                    temp += 0
+
+                    return temp
+                })
+            } else {
+                props.setCurrentSongIndex(() => {
+                    let temp = props.currentSongIndex;
+                    temp += 0
+
+                    return temp
+                })
+            }
+        }
+
+        if (shuffle === true) {
+            props.setCurrentSongIndex(() => {
+                let temp = props.currentSongIndex;
+                temp += Math.floor(Math.random() * props.songs.length)
+                if (temp > props.songs.length - 1) {
+                    temp = 0
+                }
+
+                return temp;
+            })
         }
     };
 
@@ -86,14 +128,20 @@ function Player(props) {
                         </a>
                     </li>
                     <li>
-                        <a href="#" onClick={()=>props.shuffle()} class="list__link">
+                        <a href="#" onClick={() =>shuffleFunc()} class="list__link">
                             <i class="fa fa-random"></i>
                         </a>
+                        <span className='like'>
+                            {shuffle && <h6>Shuffle is on</h6>}
+                        </span>
                     </li>
                     <li>
-                        <a href="#" onClick={() => SkipSong(false)} class="list__link">
+                        <a href="#" onClick={repeatFunc} class="list__link">
                             <i class="fa fa-undo"></i>
                         </a>
+                            <span className='like'>
+                                {repeat && <h6>Repeat is on</h6>}
+                            </span>
                     </li>
                 </ul>
             </div>

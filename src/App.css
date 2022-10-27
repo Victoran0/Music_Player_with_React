@@ -254,4 +254,6 @@ body {
 }
 .like {
     color: white;
+    padding-left: 1rem;
+    display: inline-block;
 }
